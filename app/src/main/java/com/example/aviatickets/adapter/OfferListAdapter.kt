@@ -36,6 +36,9 @@ class OfferListAdapter : ListAdapter<Offer, OfferListAdapter.ViewHolder>(OfferDi
             val flight = offer.flight
 
             with(binding) {
+//                Glide.with(context)
+//                    .load("")
+//                    .into(airlineImage);
                 departureTime.text = flight.departureTimeInfo
                 arrivalTime.text = flight.arrivalTimeInfo
                 route.text = context.getString(

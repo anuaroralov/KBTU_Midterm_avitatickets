@@ -11,12 +11,6 @@ import com.example.aviatickets.MyViewModel
 import com.example.aviatickets.R
 import com.example.aviatickets.adapter.OfferListAdapter
 import com.example.aviatickets.databinding.FragmentOfferListBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import com.example.aviatickets.model.network.ApiClient.apiService
-
-
 
 class OfferListFragment : Fragment() {
 
