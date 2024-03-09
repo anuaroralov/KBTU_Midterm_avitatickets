@@ -5,13 +5,24 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.aviatickets.MyViewModel
 import com.example.aviatickets.R
 import com.example.aviatickets.adapter.OfferListAdapter
 import com.example.aviatickets.databinding.FragmentOfferListBinding
-import com.example.aviatickets.model.service.FakeService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import com.example.aviatickets.model.network.ApiClient.apiService
+
 
 
 class OfferListFragment : Fragment() {
+
+    private val viewModel: MyViewModel by lazy {
+        ViewModelProvider(this).get(MyViewModel::class.java)
+    }
 
     companion object {
         fun newInstance() = OfferListFragment()
@@ -37,7 +48,13 @@ class OfferListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupUI()
-        adapter.setItems(FakeService.offerList)
+        binding.offerList.layoutManager= LinearLayoutManager(requireContext())
+        viewModel.offerList.observe(viewLifecycleOwner){
+            adapter.submitList(it)
+        }
+
+
+
     }
 
     private fun setupUI() {
@@ -47,15 +64,11 @@ class OfferListFragment : Fragment() {
             sortRadioGroup.setOnCheckedChangeListener { _, checkedId ->
                 when (checkedId) {
                     R.id.sort_by_price -> {
-                        /**
-                         * implement sorting by price
-                         */
+                        viewModel.sortByPrice()
                     }
 
                     R.id.sort_by_duration -> {
-                        /**
-                         * implement sorting by duration
-                         */
+                        viewModel.sortByDuration()
                     }
                 }
             }
